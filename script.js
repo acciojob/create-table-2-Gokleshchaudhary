@@ -1,6 +1,4 @@
 function createTable() {
-    //Write your code here
-  function createTable() {
     let rn = prompt("Input number of rows");
     let cn = prompt("Input number of columns");
 
@@ -26,4 +24,14 @@ function createTable() {
         table.appendChild(row);
     }
 }
-}
+describe('Table Creation', () => {
+    it('should create a table with the correct number of rows and columns', () => {
+        cy.visit('http://localhost:3000'); // Your local server URL
+        cy.window().then((win) => {
+            cy.stub(win, 'prompt').onFirstCall().returns('2').onSecondCall().returns('3');
+        });
+        cy.get('button').click(); // Click the button
+        cy.get('table tr').should('have.length', 2); // Check number of rows
+        cy.get('table tr:first td').should('have.length', 3); // Check number of columns
+    });
+});
