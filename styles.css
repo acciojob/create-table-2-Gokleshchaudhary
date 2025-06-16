@@ -1,1 +1,19 @@
 /*  your css code here. If applicable */
+body {
+    font-family: Arial, sans-serif;
+}
+
+table {
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
