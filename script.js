@@ -2,7 +2,6 @@ function createTable() {
   const rn = prompt("Input number of rows");
   const cn = prompt("Input number of columns");
 
-  // Validate input: must be positive integers
   const rows = parseInt(rn, 10);
   const cols = parseInt(cn, 10);
 
@@ -15,7 +14,7 @@ function createTable() {
   }
 
   const table = document.getElementById("myTable");
-  table.innerHTML = ""; // Clear previous table
+  table.innerHTML = "";
 
   for (let i = 0; i < rows; i++) {
     const tr = document.createElement("tr");
