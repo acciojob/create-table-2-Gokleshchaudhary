@@ -1,43 +1,36 @@
 // Function to create the dynamic table
 function createTable() {
-    let rn = prompt("Input number of rows");
-    let cn = prompt("Input number of columns");
+    // Get the number of rows
+    let rows = prompt("Input number of rows");
+    // Get the number of columns
+    let cols = prompt("Input number of columns");
 
     // Validate input
-    if (isNaN(rn) || isNaN(cn) || rn <= 0 || cn <= 0) {
+    if (isNaN(rows) || isNaN(cols) || rows <= 0 || cols <= 0) {
         alert("Please enter valid positive numbers for rows and columns.");
-        return;
+        return; // Exit the function if input is invalid
     }
 
-    rn = parseInt(rn);
-    cn = parseInt(cn);
-    
+    // Convert inputs to integers
+    rows = parseInt(rows);
+    cols = parseInt(cols);
+
+    // Get the table element
     const table = document.getElementById("myTable");
-    table.innerHTML = ""; // Clear previous table
+    // Clear any existing content in the table
+    table.innerHTML = "";
 
-    for (let i = 0; i < rn; i++) {
-        let row = document.createElement("tr");
-        for (let j = 0; j < cn; j++) {
-            let cell = document.createElement("td");
-            cell.textContent = `Row-${i} Column-${j}`;
-            row.appendChild(cell);
+    // Create the table rows and cells
+    for (let i = 0; i < rows; i++) {
+        const tr = document.createElement("tr"); // Create a new row
+        for (let j = 0; j < cols; j++) {
+            const td = document.createElement("td"); // Create a new cell
+            td.textContent = `Row-${i} Column-${j}`; // Set the text content
+            tr.appendChild(td); // Append the cell to the row
         }
-        table.appendChild(row);
+        table.appendChild(tr); // Append the row to the table
     }
 }
 
-// Cypress Test Code (for demonstration purposes)
-if (typeof Cypress !== 'undefined') {
-    describe('Table Creation', () => {
-        it('should create a table with the correct number of rows and columns', () => {
-            // Simulate visiting the page
-            cy.visit('http://localhost:3000'); // Your local server URL
-            cy.window().then((win) => {
-                cy.stub(win, 'prompt').onFirstCall().returns('2').onSecondCall().returns('3');
-            });
-            cy.get('button').click(); // Click the button
-            cy.get('table tr').should('have.length', 2); // Check number of rows
-            cy.get('table tr:first td').should('have.length', 3); // Check number of columns
-        });
-    });
-}
+// Add event listener to the button
+document.getElementById("createTableButton").addEventListener("click", createTable);
