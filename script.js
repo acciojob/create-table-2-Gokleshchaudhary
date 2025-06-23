@@ -34,3 +34,32 @@ function createTable() {
 
 // Add event listener to the button
 document.getElementById("createTableButton").addEventListener("click", createTable);
+describe('Table Creation', () => {
+    it('should create a table with the correct number of rows and columns', () => {
+        // Simulate visiting the page
+        cy.visit('http://localhost:3000'); // Your local server URL
+        cy.window().then((win) => {
+            cy.stub(win, 'prompt').onFirstCall().returns('2').onSecondCall().returns('3');
+        });
+        cy.get('#createTableButton').click(); // Click the button by ID
+        cy.get('table tr').should('have.length', 2); // Check number of rows
+        cy.get('table tr:first td').should('have.length', 3); // Check number of columns
+    });
+
+    it('should have the correct content in the cells', () => {
+        cy.get('table tr:first td').eq(0).should('have.text', 'Row-0 Column-0');
+        cy.get('table tr:first td').eq(1).should('have.text', 'Row-0 Column-1');
+        cy.get('table tr:first td').eq(2).should('have.text', 'Row-0 Column-2');
+        cy.get('table tr').eq(1).find('td').eq(0).should('have.text', 'Row-1 Column-0');
+        cy.get('table tr').eq(1).find('td').eq(1).should('have.text', 'Row-1 Column-1');
+        cy.get('table tr').eq(1).find('td').eq(2).should('have.text', 'Row-1 Column-2');
+    });
+
+    it('should display the correct prompt text', () => {
+        cy.window().then((win) => {
+            cy.stub(win, 'prompt').as('promptStub');
+            cy.get('#createTableButton').click();
+            cy.get('@promptStub').should('have.been.calledTwice');
+        });
+    });
+});
